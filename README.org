@@ -5,6 +5,11 @@
 A collection of KDE resources and repos exposed as a Repo manifest for all your
 grep-finding pleasure.
 
+**** TODO create similar endevors for
+
++ [ ] GNOME/GTK https://gitlab.gnome.org/GNOME/gtk
++ and add QT to KDE scope?
+
 * KDE Invent
 
 [[https://invent.kde.org/explore/groups?sort=name_asc][Invent.kde.org]] is the main forge for KDE. It's split into the following groups, which we can pull with their [[https://docs.gitlab.com/ee/api/][Gitlab API]], via org-babel and either restclient or graphql.
