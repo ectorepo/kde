@@ -5,6 +5,24 @@
 A collection of KDE resources and repos exposed as a Repo manifest for all your
 grep-finding pleasure.
 
+Intended usage (for the =plasma= group of projects)
+
++ create a containing directory at =$_ECTO/kde=
++ create a subdirectory at =$_ECTO/kde/plasma= and =cd= to it
++ run =repo init -u https://github.com/ectorepo/kde -m plasma.xml=
++ run =repo sync= to bring all repositories up to date
++ cross your fingers and hope no one renamed a branch to =main=
+
+if so, regenerate the XML by tangling the file or fix it manually. Since repo is
+async, it doesn't really tell you what project it's failing on in a "linear"
+fashion.
+
+this is mostly intended to keep source up to date for reference. to develop
+using repo, you need to group the projects that share common build targets with
+that in mind. See the android or chromium XML's. it has all the same traps of
+git submodules because it's the domain that's complex. it doesn't matter how
+that complexity is specified.
+
 **** TODO create similar endevors for
 
 + [ ] GNOME/GTK https://gitlab.gnome.org/GNOME/gtk
@@ -373,6 +391,8 @@ Generate =plasma.xml= manifest
 #+begin_src xml :tangle plasma.xml :noweb yes
 <?xml version="1.0" encoding="utf-8"?>
 <manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
   <<invent-plasma-xml()>>
 </manifest>
 #+end_src
