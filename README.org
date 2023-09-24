@@ -229,8 +229,167 @@ cat /tmp/invent.groups.tsv  #| sed -e 's/\\"//g'
 | Utilities                        |  63 | utilities             | utilities                   | Software utilities for a wide range of tasks, developed by KDE                           |
 
 
-**** Test Data
+* Plasma
 
+#+name: invent-plasma-gql
+#+begin_example graphql
+{
+  group(fullPath: "plasma") {
+    projects(first: 100, sort: ACTIVITY_DESC) {
+      nodes {
+        id
+        name
+        topics
+        path
+        fullPath
+        visibility
+        repository {
+          rootRef
+          exists
+        }
+      }
+    }
+  }
+}
+
+#+end_example
+
+Run query
+
+#+name: invent-plasma-eld
+#+begin_src emacs-lisp :var gql=invent-plasma-gql
+(ghub-graphql gql nil
+              :username "aionfork"
+              :host "invent.kde.org"
+              :forge 'gitlab)
+#+end_src
+
+fdsafdsa the output (the macros make this hard to turn into a function)
+
+#+name: invent-plasma-xml
+#+headers: :var gqldata=invent-plasma-eld :results value html
+#+begin_src emacs-lisp
+gqldata
+;; (thread-first
+;;   (thread-last
+;;     (a-get* (nthcdr 0 gqldata))))
+#+end_src
+
+#+name: invent-plasma-xml
+#+headers: :var gqldata=invent-plasma-eld :results value html
+#+begin_src emacs-lisp
+(thread-first
+  (thread-last
+    (a-get* (nthcdr 0 gqldata) 'data 'group 'projects 'nodes)
+    ;(mapcar (lambda (el) (a-get* el 'node)))
+    ;(seq-filter (lambda (el) (not (a-get* el 'isArchived))))
+    (mapcar (lambda (el)
+              (let* (;; (defaultBranchRef (a-get* 'defaultBranchRef))
+                     (path (a-get* el 'path))
+                     (name (a-get* el 'fullPath))
+                     (root-ref (a-get* el 'repository 'rootRef))
+                     (ref (concat "refs/heads/" root-ref)))
+                (concat "<project"
+                        " name=\"" name
+                        "\" path=\"" path
+                        "\" revision=\"" ref "\" remote=\"invent\"/>")))))
+  (cl-sort 'string-lessp :key 'downcase)
+  (string-join "\n"))
+#+end_src
+
+#+RESULTS: invent-plasma-xml
+#+begin_export html
+<project name="plasma/aura-browser" path="aura-browser" revision="refs/heads/master" remote="github"/>
+<project name="plasma/bluedevil" path="bluedevil" revision="refs/heads/master" remote="github"/>
+<project name="plasma/breeze" path="breeze" revision="refs/heads/master" remote="github"/>
+<project name="plasma/breeze-grub" path="breeze-grub" revision="refs/heads/master" remote="github"/>
+<project name="plasma/breeze-gtk" path="breeze-gtk" revision="refs/heads/master" remote="github"/>
+<project name="plasma/breeze-plymouth" path="breeze-plymouth" revision="refs/heads/master" remote="github"/>
+<project name="plasma/discover" path="discover" revision="refs/heads/master" remote="github"/>
+<project name="plasma/drkonqi" path="drkonqi" revision="refs/heads/master" remote="github"/>
+<project name="plasma/flatpak-kcm" path="flatpak-kcm" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kactivitymanagerd" path="kactivitymanagerd" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kde-cli-tools" path="kde-cli-tools" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kde-gtk-config" path="kde-gtk-config" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kde-vdg-extras" path="kde-vdg-extras" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kdecoration" path="kdecoration" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kdeplasma-addons" path="kdeplasma-addons" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kgamma5" path="kgamma5" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kglobalacceld" path="kglobalacceld" revision="refs/heads/master" remote="github"/>
+<project name="plasma/khotkeys" path="khotkeys" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kinfocenter" path="kinfocenter" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kmenuedit" path="kmenuedit" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kpipewire" path="kpipewire" revision="refs/heads/master" remote="github"/>
+<project name="plasma/krdp" path="krdp" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kscreen" path="kscreen" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kscreenlocker" path="kscreenlocker" revision="refs/heads/master" remote="github"/>
+<project name="plasma/ksshaskpass" path="ksshaskpass" revision="refs/heads/master" remote="github"/>
+<project name="plasma/ksysguard" path="ksysguard" revision="refs/heads/master" remote="github"/>
+<project name="plasma/ksystemstats" path="ksystemstats" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kwallet-pam" path="kwallet-pam" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kwayland-integration" path="kwayland-integration" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kwayland-server" path="kwayland-server" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kwin" path="kwin" revision="refs/heads/master" remote="github"/>
+<project name="plasma/kwrited" path="kwrited" revision="refs/heads/master" remote="github"/>
+<project name="plasma/lancelot" path="lancelot" revision="refs/heads/master" remote="github"/>
+<project name="plasma/latte-dock" path="latte-dock" revision="refs/heads/master" remote="github"/>
+<project name="plasma/layer-shell-qt" path="layer-shell-qt" revision="refs/heads/master" remote="github"/>
+<project name="plasma/libkscreen" path="libkscreen" revision="refs/heads/master" remote="github"/>
+<project name="plasma/libksysguard" path="libksysguard" revision="refs/heads/master" remote="github"/>
+<project name="plasma/milou" path="milou" revision="refs/heads/master" remote="github"/>
+<project name="plasma/ocean-sound-theme" path="ocean-sound-theme" revision="refs/heads/master" remote="github"/>
+<project name="plasma/oxygen" path="oxygen" revision="refs/heads/master" remote="github"/>
+<project name="plasma/oxygen-gtk" path="oxygen-gtk" revision="refs/heads/master" remote="github"/>
+<project name="plasma/oxygen-sounds" path="oxygen-sounds" revision="refs/heads/master" remote="github"/>
+<project name="plasma/pico-wizard" path="pico-wizard" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plank-player" path="plank-player" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-active-window-control" path="plasma-active-window-control" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-bigscreen" path="plasma-bigscreen" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-browser-integration" path="plasma-browser-integration" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-desktop" path="plasma-desktop" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-disks" path="plasma-disks" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-firewall" path="plasma-firewall" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-integration" path="plasma-integration" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-mobile" path="plasma-mobile" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-nano" path="plasma-nano" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-nm" path="plasma-nm" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-pa" path="plasma-pa" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-pass" path="plasma-pass" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-redshift-control" path="plasma-redshift-control" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-sdk" path="plasma-sdk" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-simplemenu" path="plasma-simplemenu" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-systemmonitor" path="plasma-systemmonitor" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-tests" path="plasma-tests" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-thunderbolt" path="plasma-thunderbolt" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-vault" path="plasma-vault" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-welcome" path="plasma-welcome" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-workspace" path="plasma-workspace" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma-workspace-wallpapers" path="plasma-workspace-wallpapers" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plasma5support" path="plasma5support" revision="refs/heads/master" remote="github"/>
+<project name="plasma/plymouth-kcm" path="plymouth-kcm" revision="refs/heads/master" remote="github"/>
+<project name="plasma/polkit-kde-agent-1" path="polkit-kde-agent-1" revision="refs/heads/master" remote="github"/>
+<project name="plasma/powerdevil" path="powerdevil" revision="refs/heads/master" remote="github"/>
+<project name="plasma/qqc2-breeze-style" path="qqc2-breeze-style" revision="refs/heads/master" remote="github"/>
+<project name="plasma/sddm-kcm" path="sddm-kcm" revision="refs/heads/master" remote="github"/>
+<project name="plasma/smaragd" path="smaragd" revision="refs/heads/master" remote="github"/>
+<project name="plasma/systemsettings" path="systemsettings" revision="refs/heads/master" remote="github"/>
+<project name="plasma/user-manager" path="user-manager" revision="refs/heads/master" remote="github"/>
+<project name="plasma/xdg-desktop-portal-kde" path="xdg-desktop-portal-kde" revision="refs/heads/master" remote="github"/>
+#+end_export
+
+Generate =plasma.xml= manifest
+
+#+begin_src xml :tangle plasma.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <<invent-plasma-xml()>>
+</manifest>
+#+end_src
+
+
+* Testing
+
+** Groups
 #  | @text \(.name) \(.projects.count) \(.path) \(.fullPath) \(.description)
 #  | map({name, projects.count, path, fullPath, description})
 
@@ -258,7 +417,6 @@ cat /tmp/invent.groups.tsv  #| sed -e 's/\\"//g'
 }
 #+end_example
 
-
 #+headers: :stdin eg-json
 #+begin_src jq :results output
 .data.groups.nodes[]
@@ -266,4 +424,70 @@ cat /tmp/invent.groups.tsv  #| sed -e 's/\\"//g'
   | @tsv
 #+end_src
 
-*** Accessibility
+** Projects
+
+#+name: eg-proj
+#+begin_example json
+{
+  "data" : {
+    "group" : {
+      "projects" : {
+        "nodes" : [
+          {
+            "id" : "gid://gitlab/Project/2703",
+            "name" : "Plasma Workspace",
+            "topics" : [],
+            "path" : "plasma-workspace",
+            "fullPath" : "plasma/plasma-workspace",
+            "visibility" : "public",
+            "repository" : {"rootRef" : "master", "exists" : true}
+          },
+          {
+            "id" : "gid://gitlab/Project/2163",
+            "name" : "KDE Portal for XDG Desktop",
+            "topics" : [],
+            "path" : "xdg-desktop-portal-kde",
+            "fullPath" : "plasma/xdg-desktop-portal-kde",
+            "visibility" : "public",
+            "repository" : {"rootRef" : "master", "exists" : true}
+          },
+          {
+            "id" : "gid://gitlab/Project/2559",
+            "name" : "PowerDevil",
+            "topics" : [],
+            "path" : "powerdevil",
+            "fullPath" : "plasma/powerdevil",
+            "visibility" : "public",
+            "repository" : {"rootRef" : "master", "exists" : true}
+          }
+        ]
+      }
+    }
+  }
+}
+#+end_example
+
+#+name: jq-proj
+#+headers: :stdin eg-proj
+#+headers: :cmd-line --raw-output
+#+begin_src jq :results output
+.data.group.projects.nodes[]
+  | [.name, .path, .fullPath, .description, .repository.rootRef]
+#  | @tsv
+#+end_src
+
+#+RESULTS:
+: Plasma Workspace	plasma-workspace	plasma/plasma-workspace		master
+: KDE Portal for XDG Desktop	xdg-desktop-portal-kde	plasma/xdg-desktop-portal-kde		master
+: PowerDevil	powerdevil	plasma/powerdevil		master
+
+gadmait... it doesn't understand json?
+
+#+headers: :var json=eg-proj
+#+begin_src sh :results output
+echo $json | xq -x '.data.group.projects.nodes[] | [.name, .path, .fullPath, .description, .repository.rootRef]'
+#+end_src
+
+#+RESULTS:
+: xq: Error running jq: ExpatError: not well-formed (invalid token): line 1, column 0.
+: [ Babel evaluation exited with code 1 ]
