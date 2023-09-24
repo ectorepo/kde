@@ -5,7 +5,20 @@
 A collection of KDE resources and repos exposed as a Repo manifest for all your
 grep-finding pleasure.
 
-Intended usage (for the =plasma= group of projects)
+Linux badly needs to distribute sources with distributions/packages and make it
+obvious how to find the source -- and not on a project by project basis.
+
+* Intended Usage
+
+This is mostly intended to keep source up to date for reference. to develop
+using repo, you need to group the projects that share common build targets with
+that in mind. See the android or chromium XML's. it has all the same traps of
+git submodules because it's the domain that's complex. it doesn't matter how
+that complexity is specified.
+
+Each =invent.kde.org= group should have it's own XML file.
+
+For the =plasma= group of projects, you would:
 
 + create a containing directory at =$_ECTO/kde=
 + create a subdirectory at =$_ECTO/kde/plasma= and =cd= to it
@@ -17,17 +30,21 @@ if so, regenerate the XML by tangling the file or fix it manually. Since repo is
 async, it doesn't really tell you what project it's failing on in a "linear"
 fashion.
 
-this is mostly intended to keep source up to date for reference. to develop
-using repo, you need to group the projects that share common build targets with
-that in mind. See the android or chromium XML's. it has all the same traps of
-git submodules because it's the domain that's complex. it doesn't matter how
-that complexity is specified.
+That should give you up to date copies of the following =plasma= repositories:
 
-**** TODO create similar endevors for
-
-+ [ ] GNOME/GTK https://gitlab.gnome.org/GNOME/gtk
-+ and add QT to KDE scope?
-
+| aura-browser      | kdeplasma-addons | ksystemstats         | oxygen                       | plasma-mobile           | plasma-workspace            |
+| bluedevil         | kde-vdg-extras   | kwallet-pam          | oxygen-gtk                   | plasma-nano             | plasma-workspace-wallpapers |
+| breeze            | kgamma5          | kwayland-integration | oxygen-sounds                | plasma-nm               | plymouth-kcm                |
+| breeze-grub       | kglobalacceld    | kwayland-server      | pico-wizard                  | plasma-pa               | polkit-kde-agent-1          |
+| breeze-gtk        | khotkeys         | kwin                 | plank-player                 | plasma-pass             | powerdevil                  |
+| breeze-plymouth   | kinfocenter      | kwrited              | plasma5support               | plasma-redshift-control | qqc2-breeze-style           |
+| discover          | kmenuedit        | lancelot             | plasma-active-window-control | plasma-sdk              | sddm-kcm                    |
+| drkonqi           | kpipewire        | latte-dock           | plasma-bigscreen             | plasma-simplemenu       | smaragd                     |
+| flatpak-kcm       | krdp             | layer-shell-qt       | plasma-browser-integration   | plasma-systemmonitor    | systemsettings              |
+| kactivitymanagerd | kscreen          | libkscreen           | plasma-desktop               | plasma-tests            | user-manager                |
+| kde-cli-tools     | kscreenlocker    | libksysguard         | plasma-disks                 | plasma-thunderbolt      | xdg-desktop-portal-kde      |
+| kdecoration       | ksshaskpass      | milou                | plasma-firewall              | plasma-vault            |                             |
+| kde-gtk-config    | ksysguard        | ocean-sound-theme    | plasma-integration           | plasma-welcome          |                             |
 
 * Org Babel
 
