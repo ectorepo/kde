@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="sdk/cervisia" path="cervisia" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/clazy" path="clazy" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/codevis" path="codevis" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/cutehmi" path="cutehmi" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/dferry" path="dferry" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/dolphin-plugins" path="dolphin-plugins" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/doxyqml" path="doxyqml" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/elf-dissector" path="elf-dissector" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/eloquens" path="eloquens" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/git-lab" path="git-lab" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/heaptrack" path="heaptrack" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/ikona" path="ikona" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/inqlude-client" path="inqlude-client" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kapptemplate" path="kapptemplate" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kcachegrind" path="kcachegrind" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kde-dev-scripts" path="kde-dev-scripts" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kde-dev-utils" path="kde-dev-utils" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kde-ruleset" path="kde-ruleset" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kdecoration-viewer" path="kdecoration-viewer" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kdesdk-kio" path="kdesdk-kio" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kdesdk-thumbnailers" path="kdesdk-thumbnailers" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kdesrc-build" path="kdesrc-build" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kdesvn" path="kdesvn" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kdiff3" path="kdiff3" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kirigami-gallery" path="kirigami-gallery" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kobjecttracking" path="kobjecttracking" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kommit" path="kommit" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kompare" path="kompare" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/kshim" path="kshim" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/ktechlab" path="ktechlab" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/libkomparediff2" path="libkomparediff2" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/licensedigger" path="licensedigger" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/licentia" path="licentia" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/lokalize" path="lokalize" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/massif-visualizer" path="massif-visualizer" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/pology" path="pology" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/poxml" path="poxml" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/qml-lsp" path="qml-lsp" revision="refs/heads/rjienrlwey" remote="invent"/>
+  <project name="sdk/releaseme" path="releaseme" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/rust-qt-binding-generator" path="rust-qt-binding-generator" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/selenium-webdriver-at-spi" path="selenium-webdriver-at-spi" revision="refs/heads/master" remote="invent"/>
+  <project name="sdk/umbrello" path="umbrello" revision="refs/heads/master" remote="invent"/>
+</manifest>

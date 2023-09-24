@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="network/alligator" path="alligator" revision="refs/heads/master" remote="invent"/>
+  <project name="network/angelfish" path="angelfish" revision="refs/heads/master" remote="invent"/>
+  <project name="network/choqok" path="choqok" revision="refs/heads/master" remote="invent"/>
+  <project name="network/falkon" path="falkon" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kaccounts-integration" path="kaccounts-integration" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kaccounts-providers" path="kaccounts-providers" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kaidan" path="kaidan" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kdeconnect-android" path="kdeconnect-android" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kdeconnect-ios" path="kdeconnect-ios" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kdeconnect-kde" path="kdeconnect-kde" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kdeconnect-meta" path="kdeconnect-meta" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kdenetwork-filesharing" path="kdenetwork-filesharing" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kget" path="kget" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kio-extras" path="kio-extras" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kio-gdrive" path="kio-gdrive" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kio-gopher" path="kio-gopher" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kio-s3" path="kio-s3" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kio-upnp-ms" path="kio-upnp-ms" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kio-zeroconf" path="kio-zeroconf" revision="refs/heads/master" remote="invent"/>
+  <project name="network/konqueror" path="konqueror" revision="refs/heads/master" remote="invent"/>
+  <project name="network/konversation" path="konversation" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kopete" path="kopete" revision="refs/heads/master" remote="invent"/>
+  <project name="network/krdc" path="krdc" revision="refs/heads/master" remote="invent"/>
+  <project name="network/krfb" path="krfb" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kte-collaborative" path="kte-collaborative" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktorrent" path="ktorrent" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-accounts-kcm" path="ktp-accounts-kcm" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-approver" path="ktp-approver" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-auth-handler" path="ktp-auth-handler" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-call-ui" path="ktp-call-ui" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-common-internals" path="ktp-common-internals" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-contact-list" path="ktp-contact-list" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-contact-runner" path="ktp-contact-runner" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-desktop-applets" path="ktp-desktop-applets" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-filetransfer-handler" path="ktp-filetransfer-handler" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-kded-module" path="ktp-kded-module" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-send-file" path="ktp-send-file" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ktp-text-ui" path="ktp-text-ui" revision="refs/heads/master" remote="invent"/>
+  <project name="network/kwooty" path="kwooty" revision="refs/heads/master" remote="invent"/>
+  <project name="network/libktorrent" path="libktorrent" revision="refs/heads/master" remote="invent"/>
+  <project name="network/neochat" path="neochat" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ring-kde" path="ring-kde" revision="refs/heads/master" remote="invent"/>
+  <project name="network/ruqola" path="ruqola" revision="refs/heads/master" remote="invent"/>
+  <project name="network/signon-kwallet-extension" path="signon-kwallet-extension" revision="refs/heads/master" remote="invent"/>
+  <project name="network/smb4k" path="smb4k" revision="refs/heads/master" remote="invent"/>
+  <project name="network/telepathy-logger-qt" path="telepathy-logger-qt" revision="refs/heads/master" remote="invent"/>
+  <project name="network/tok" path="tok" revision="refs/heads/dev" remote="invent"/>
+  <project name="network/tokodon" path="tokodon" revision="refs/heads/master" remote="invent"/>
+</manifest>

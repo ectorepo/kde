@@ -46,12 +46,38 @@ That should give you up to date copies of the following =plasma= repositories:
 | kdecoration       | ksshaskpass      | milou                | plasma-firewall              | plasma-vault            |                             |
 | kde-gtk-config    | ksysguard        | ocean-sound-theme    | plasma-integration           | plasma-welcome          |                             |
 
+***** TODO Test cloning repos
++ [ ] Utilities
++ [ ] Graphics
++ [ ] Documentation
++ [ ] Acessibility
++ [ ] System
++ [ ] Libraries
++ [ ] Games
++ [ ] Network
++ [ ] Sdk
++ [ ] Rolisteam
++ [ ] Maui
++ [X] plasma
++ [ ] Frameworks
+
+***** TODO Qt, Framework and Other Repos
+
+These are larger or have more complex categorization/subpaths.
+
++ [ ] plasma-bigscreen
++ [ ] plasma-mobile
++ [ ] qt
++ [ ] maui
+
 * Org Babel
 
 #+begin_src emacs-lisp
-(setq-local org-confirm-babel-evaluate nil)
+(setq-local org-confirm-babel-evaluate nil
+            gitlab-username "gitlab-username")
 #+end_src
 
+Max number of results/repositories.
 
 #+name: nrepos
 #+begin_src emacs-lisp
@@ -61,38 +87,25 @@ That should give you up to date copies of the following =plasma= repositories:
 #+RESULTS: nrepos
 : 100
 
+Not really working
 
-* KDE Invent
+#+begin_quote
+;; #+call: graphql-eld-to-xml(gqldata=(format (identity projects-query) "utilities"))
+;;
+;; (call_runquery (gql=(format projects-query "utilities")))
+;; #+name: invent-utilities-xml
+;; #+call: graphql-eld-to-xml(gqldata=runquery(gql=(identity invent-utilities-gql)))
 
-[[https://invent.kde.org/explore/groups?sort=name_asc][Invent.kde.org]] is the main forge for KDE. It's split into the following groups, which we can pull with their [[https://docs.gitlab.com/ee/api/][Gitlab API]], via org-babel and either restclient or graphql.
+#+end_quote
 
-Assuming that the presence of Gitlab [[https://invent.kde.org/help/api/graphql/index.md][GraphQL docs]] in [[https://invent.kde.org/help/#build-an-integration-with-gitlab][KDE's integration docs]]
-implies that feature is active, that would be far more convenient. Checking the
-Gitlab [[https://docs.gitlab.com/ee/api/graphql/index.html][GraphQL docs]] (including the [[https://docs.gitlab.com/ee/api/graphql/getting_started.html][Getting Started]] guide) gives us some more
-info.
+** GraphQL Queries
+:PROPERTIES:
+:VISIBILITY: folded
+:END:
 
+Get the groups for reference
 
-** Schema
-
-This can run in the GraphiQL explorer
-
-#+begin_src graphql
-query {
-  __schema {
-    types {
-      name
-      kind
-      description
-      fields { name }
-    }
-  }
-}
-#+end_src
-
-
-** Groups
-
-#+name: invent-groups-graphql
+#+name: invent-groups-query
 #+begin_example graphql
 query {
   groups(first: 100)  {
@@ -116,18 +129,84 @@ query {
 }
 #+end_example
 
-Run the query ... wow how tf did i not figure out that it can take a string?!
+For now, a hack.
 
-#+name: invent-groups-eld
-#+begin_src emacs-lisp :results silent :var gql=invent-groups-graphql
+#+name: projects-query
+#+begin_example graphql
+{
+  group(fullPath: "%s") {
+    projects(first: 100, sort: ACTIVITY_DESC) {
+      nodes {
+        id
+        name
+        topics
+        path
+        fullPath
+        visibility
+        repository {
+          rootRef
+          exists
+        }
+      }
+    }
+  }
+}
+#+end_example
+
+** Functions
+
+Run the query ... wow how did i not figure out that it can take a string?! That
+would've saved so much time (I tried)
+
+#+name: runquery
+#+begin_src emacs-lisp :var gql="query { a string }"
 (ghub-graphql gql nil
-              :username "aionfork"
+              :username gitlab-username
               :host "invent.kde.org"
               :forge 'gitlab)
 #+end_src
 
-This should be a =#+call:= or =defun= instead, but this way, I can work with eld
-or json.
+This function will transform the =graphql= results from unserialized =eld= to
+=xml= in =#+call:=
+
+#+name: graphql-eld-to-xml
+#+begin_src emacs-lisp :var gqldata='(data (group (projects (nodes '())))) :results value html
+(thread-first
+  (thread-last
+    (a-get* (nthcdr 0 gqldata) 'data 'group 'projects 'nodes)
+    ;(mapcar (lambda (el) (a-get* el 'node)))
+    ;(seq-filter (lambda (el) (not (a-get* el 'isArchived))))
+    (mapcar (lambda (el)
+              (let* (;; (defaultBranchRef (a-get* 'defaultBranchRef))
+                     (path (a-get* el 'path))
+                     (name (a-get* el 'fullPath))
+                     (root-ref (a-get* el 'repository 'rootRef))
+                     (ref (concat "refs/heads/" root-ref)))
+                (concat "<project"
+                        " name=\"" name
+                        "\" path=\"" path
+                        "\" revision=\"" ref "\" remote=\"invent\"/>")))))
+  (cl-sort 'string-lessp :key 'downcase)
+  (string-join "\n"))
+#+end_src
+
+* KDE Invent
+
+[[https://invent.kde.org/explore/groups?sort=name_asc][Invent.kde.org]] is the main forge for KDE. It's split into the following groups, which we can pull with their [[https://docs.gitlab.com/ee/api/][Gitlab API]], via org-babel and either restclient or graphql.
+
+Assuming that the presence of Gitlab [[https://invent.kde.org/help/api/graphql/index.md][GraphQL docs]] in [[https://invent.kde.org/help/#build-an-integration-with-gitlab][KDE's integration docs]]
+implies that feature is active, that would be far more convenient. Checking the
+Gitlab [[https://docs.gitlab.com/ee/api/graphql/index.html][GraphQL docs]] (including the [[https://docs.gitlab.com/ee/api/graphql/getting_started.html][Getting Started]] guide) gives us some more
+info.
+
+
+** Groups
+
+#+name: invent-groups-eld
+#+call: runquery(gql=invent-groups-query) :results value silent
+
+This just demostrates in place querying on returned data, which could
+just be GraphIQL queries saved to =/tmp=
 
 #+name: invent-groups-json
 #+headers: :var eld=invent-groups-eld :file /tmp/invent.groups.json
@@ -139,6 +218,7 @@ or json.
 [[file:/tmp/invent.groups.json]]
 
 All the text is escaped or it can't be formatted.
+
 + as TSV: =#+begin_src jq :results output file :file /tmp/invent.groups.tsv=
 + stdin doesn't work too well =#+headers: :stdin invent-groups-json=
 
@@ -162,144 +242,486 @@ cat /tmp/invent.groups.tsv  #| sed -e 's/\\"//g'
 #+end_src
 
 #+RESULTS:
-| 3rdparty                         |  18 | 3rdparty              | neon/3rdparty               |                                                                                          |
-| Accessibility                    |   1 | accessibility         | teams/accessibility         |                                                                                          |
-| Accessibility                    |   4 | accessibility         | accessibility               | Applications aimed at making computing more accessible                                   |
-| Akademy                          |   2 | akademy               | teams/akademy               |                                                                                          |
-| Android                          |   1 | android               | teams/android               |                                                                                          |
-| Automation and Systematization   |   1 | automation            | teams/automation            | Team dedicated to the implementation of the KDE Goal with the same name. See https://community.kde.org/Goals/Automate_and_systematize_internal_processes |
-| backports-focal                  |  56 | backports-focal       | neon/backports-focal        |                                                                                          |
-| backports-jammy                  |  62 | backports-jammy       | neon/backports-jammy        |                                                                                          |
-| Blauer Engel                     |   1 | blauer-engel          | teams/blauer-engel          |                                                                                          |
-| CI Artifacts                     |  13 | ci-artifacts          | teams/ci-artifacts          |                                                                                          |
-| clang                            |   5 | clang                 | qt/clang                    |                                                                                          |
-| Community Working Group          |   1 | community-wg          | teams/community-wg          |                                                                                          |
-| Documentation                    |   1 | documentation         | teams/documentation         |                                                                                          |
-| Documentation                    |   8 | documentation         | documentation               | Documentation for some of the KDE software                                               |
-| Education                        |  34 | education             | education                   | Applications, libraries and add-ons for educational and scientific purposes              |
-| extras                           | 122 | extras                | neon/extras                 |                                                                                          |
-| Flathub                          |   1 | flathub               | teams/flathub               | Team of KDE developers maintaining the KDE Apps as Flatpaks on Flathub and in KDE Invent.\r\n\r\nIssues with Flathub Flatpaks should be opened on Flathub GitHub repos. |
-| Forks                            |  33 | forks                 | neon/forks                  |                                                                                          |
-| Frameworks                       |  87 | frameworks            | frameworks                  | KDE Frameworks, cross-platform add-on libraries for coding applications with Qt          |
-| Frameworks Devs                  |   1 | frameworks-devs       | teams/frameworks-devs       |                                                                                          |
-| Games                            |  48 | games                 | games                       | Applications for fun and entertainment                                                   |
-| Gardening                        |   1 | gardening             | teams/gardening             |                                                                                          |
-| GCompris Contributors            |   1 | gcompris-contributors | teams/gcompris-contributors |                                                                                          |
-| Graphics                         |  42 | graphics              | graphics                    | Applications, libraries and add-ons that display and edit computer graphics              |
-| Historical                       |  16 | historical            | historical                  | Repositories that serve a historical purpose                                             |
-| infrastructure                   |   3 | infrastructure        | neon/infrastructure         |                                                                                          |
-| InfrastructureTests              |   4 | infrastructuretests   | teams/infrastructuretests   |                                                                                          |
-| installer-framework              |   1 | installer-framework   | qt/installer-framework      |                                                                                          |
-| kde                              | 385 | kde                   | neon/kde                    |                                                                                          |
-| KDE Brazil                       |   4 | kde-brazil            | teams/kde-brazil            |                                                                                          |
-| KDE Developers                   |   1 | kde-developers        | teams/kde-developers        |                                                                                          |
-| KDE Eco                          |   5 | eco                   | teams/eco                   |                                                                                          |
-| KDE Espana Board                 |   0 | kde-espana-board      | teams/kde-espana-board      |                                                                                          |
-| KDE e.V.                         |   0 | kde-ev                | teams/kde-ev                |                                                                                          |
-| KDE e.V. Board                   |   4 | kde-ev-board          | teams/kde-ev-board          |                                                                                          |
-| KDE e.V. Financial Working Group |   0 | kde-ev-financial      | teams/kde-ev-financial      |                                                                                          |
-| KDE e.V. Fundraising             |   0 | kde-ev-fundraising    | teams/kde-ev-fundraising    |                                                                                          |
-| KDE Francophone                  |   1 | kde-francophone       | teams/kde-francophone       |                                                                                          |
-| KDE Free Qt Working Group        |   1 | kde-free-qt-wg        | teams/kde-free-qt-wg        |                                                                                          |
-| KDE IM Operations                |   1 | kde-im-operations     | teams/kde-im-operations     | Supporting KDE's IRC, Matrix & Telegram channels and users                               |
-| KDE Russia                       |   3 | kde-russia            | teams/kde-russia            |                                                                                          |
-| KDevelop                         |  15 | kdevelop              | kdevelop                    | Cross-platform IDE for C, C++, Python, QML/JavaScript and PHP                            |
-| KDE Visual Design Group          |   1 | vdg                   | teams/vdg                   | KDE's visual and UX/UI design group                                                      |
-| KDE Web Team                     |   1 | web                   | teams/web                   |                                                                                          |
-| kf6                              |  80 | kf6                   | neon/kf6                    |                                                                                          |
-| Libraries                        |  59 | libraries             | libraries                   | Various useful libraries used by other KDE projects                                      |
-| license-tools                    |   1 | license-tools         | qt/license-tools            |                                                                                          |
-| Licensing                        |   1 | licensing             | teams/licensing             |                                                                                          |
-| Localization                     |   0 | localization          | teams/localization          | The KDE project which touches Localization (l10n) and Internationalization (i18n)        |
-| Maui                             |  31 | maui                  | maui                        | Modular front-end framework for developing fast and compelling user experiences          |
-| meta                             |   1 | meta                  | qt/meta                     |                                                                                          |
-| ministro                         |   1 | ministro              | qt/ministro                 |                                                                                          |
-| mobile                           |  33 | mobile                | neon/mobile                 |                                                                                          |
-| Multimedia                       |  27 | multimedia            | multimedia                  | Applications for multimedia playback, processing and creation                            |
-| neon                             |  22 | neon                  | neon/neon                   |                                                                                          |
-| Neon                             |   5 | neon                  | neon                        | Packaging information for the Neon distribution                                          |
-| neon-packaging                   | 176 | neon-packaging        | neon/neon-packaging         |                                                                                          |
-| Network                          |  48 | network               | network                     | Applications and add-ons that interact with Internet and other networks                  |
-| Office                           |  14 | office                | office                      | Office applications that work with documents, databases and finances.                    |
-| Packaging                        |  22 | packaging             | packaging                   | Data and tools that help deliver KDE software to its users                               |
-| PIM                              |   1 | pim                   | teams/pim                   |                                                                                          |
-| PIM                              |  74 | pim                   | pim                         | Applications, libraries and add-ons for personal information management                  |
-| Plasma                           |  76 | plasma                | plasma                      | Desktop environment for a wide range of devices and user needs                           |
-| Plasma Bigscreen                 |  13 | plasma-bigscreen      | plasma-bigscreen            | Open-source user interface for Televisions, based on Plasma technologies                 |
-| Plasma Ink                       |   1 | plasma-ink            | teams/plasma-ink            |                                                                                          |
-| Plasma Mobile                    |   1 | plasma-mobile         | teams/plasma-mobile         |                                                                                          |
-| Plasma Mobile                    |  17 | plasma-mobile         | plasma-mobile               | Open-source user interface for phones, based on Plasma technologies                      |
-| playground                       |  15 | playground            | qt/playground               |                                                                                          |
-| Promo                            |   0 | promo                 | teams/promo                 |                                                                                          |
-| pyside                           |   7 | pyside                | qt/pyside                   |                                                                                          |
-| qbs                              |   1 | qbs                   | qt/qbs                      |                                                                                          |
-| qt                               |  49 | qt                    | neon/qt                     |                                                                                          |
-| qt                               | 104 | qt                    | qt/qt                       |                                                                                          |
-| qt3dstudio                       |   7 | qt3dstudio            | qt/qt3dstudio               |                                                                                          |
-| qt4ia                            |   1 | qt4ia                 | qt/qt4ia                    |                                                                                          |
-| qt6                              |  50 | qt6                   | neon/qt6                    |                                                                                          |
-| qt-apps                          |  19 | qt-apps               | qt/qt-apps                  |                                                                                          |
-| qt-creator                       |   2 | qt-creator            | qt/playground/qt-creator    |                                                                                          |
-| qt-creator                       |  12 | qt-creator            | qt/qt-creator               |                                                                                          |
-| qtdesigntools                    |   1 | qtdesigntools         | qt/qtdesigntools            |                                                                                          |
-| qt-extensions                    |   4 | qt-extensions         | qt/qt-extensions            |                                                                                          |
-| qt-labs                          |  28 | qt-labs               | qt/qt-labs                  |                                                                                          |
-| qt-learning                      |   2 | qt-learning           | qt/qt-learning              |                                                                                          |
-| qt-mobility                      |   1 | qt-mobility           | qt/qt-mobility              |                                                                                          |
-| qtonpi                           |   1 | qtonpi                | qt/qtonpi                   |                                                                                          |
+| Accessibility                    |   4 | accessibility         | accessibility               | Applications aimed at making computing more accessible                                                                  |
+| Documentation                    |   8 | documentation         | documentation               | Documentation for some of the KDE software                                                                              |
+| Education                        |  34 | education             | education                   | Applications, libraries and add-ons for educational and scientific purposes                                             |
+| Frameworks                       |  87 | frameworks            | frameworks                  | KDE Frameworks, cross-platform add-on libraries for coding applications with Qt                                         |
+| Games                            |  48 | games                 | games                       | Applications for fun and entertainment                                                                                  |
+| Graphics                         |  42 | graphics              | graphics                    | Applications, libraries and add-ons that display and edit computer graphics                                             |
+| Historical                       |  16 | historical            | historical                  | Repositories that serve a historical purpose                                                                            |
+| KDevelop                         |  15 | kdevelop              | kdevelop                    | Cross-platform IDE for C, C++, Python, QML/JavaScript and PHP                                                           |
+| Libraries                        |  59 | libraries             | libraries                   | Various useful libraries used by other KDE projects                                                                     |
+| Maui                             |  31 | maui                  | maui                        | Modular front-end framework for developing fast and compelling user experiences                                         |
+| Multimedia                       |  27 | multimedia            | multimedia                  | Applications for multimedia playback, processing and creation                                                           |
+| Neon                             |   5 | neon                  | neon                        | Packaging information for the Neon distribution                                                                         |
+| 3rdparty                         |  18 | 3rdparty              | neon/3rdparty               |                                                                                                                         |
+| backports-focal                  |  56 | backports-focal       | neon/backports-focal        |                                                                                                                         |
+| backports-jammy                  |  62 | backports-jammy       | neon/backports-jammy        |                                                                                                                         |
+| extras                           | 122 | extras                | neon/extras                 |                                                                                                                         |
+| Forks                            |  33 | forks                 | neon/forks                  |                                                                                                                         |
+| infrastructure                   |   3 | infrastructure        | neon/infrastructure         |                                                                                                                         |
+| kde                              | 385 | kde                   | neon/kde                    |                                                                                                                         |
+| kf6                              |  80 | kf6                   | neon/kf6                    |                                                                                                                         |
+| mobile                           |  33 | mobile                | neon/mobile                 |                                                                                                                         |
+| neon                             |  22 | neon                  | neon/neon                   |                                                                                                                         |
+| neon-packaging                   | 176 | neon-packaging        | neon/neon-packaging         |                                                                                                                         |
+| qt                               |  49 | qt                    | neon/qt                     |                                                                                                                         |
+| qt6                              |  50 | qt6                   | neon/qt6                    |                                                                                                                         |
+| Network                          |  48 | network               | network                     | Applications and add-ons that interact with Internet and other networks                                                 |
+| Office                           |  14 | office                | office                      | Office applications that work with documents, databases and finances.                                                   |
+| Packaging                        |  22 | packaging             | packaging                   | Data and tools that help deliver KDE software to its users                                                              |
+| PIM                              |  74 | pim                   | pim                         | Applications, libraries and add-ons for personal information management                                                 |
+| Plasma                           |  76 | plasma                | plasma                      | Desktop environment for a wide range of devices and user needs                                                          |
+| Plasma Bigscreen                 |  13 | plasma-bigscreen      | plasma-bigscreen            | Open-source user interface for Televisions, based on Plasma technologies                                                |
+| Plasma Mobile                    |  17 | plasma-mobile         | plasma-mobile               | Open-source user interface for phones, based on Plasma technologies                                                     |
 | Qt Project                       |   1 | qt                    | qt                          | Replica of the Qt Project repositories, containing the KDE maintained patch branches in addition to everything from upstream. |
-| qtqa                             |   7 | qtqa                  | qt/qtqa                     |                                                                                          |
-| qtsdk                            |   2 | qtsdk                 | qt/qtsdk                    |                                                                                          |
-| qt-solutions                     |   1 | qt-solutions          | qt/qt-solutions             |                                                                                          |
-| Quality Assurance                |   1 | qa                    | teams/qa                    |                                                                                          |
-| Release Service                  |   1 | release-service       | teams/release-service       |                                                                                          |
-| Rolisteam                        |   8 | rolisteam             | rolisteam                   | Virtual tabletop software that helps manage tabletop role playing games with remote friends/players |
-| SDK                              |  42 | sdk                   | sdk                         | Applications and scripts that ease software development                                  |
-| Sysadmin                         |  57 | sysadmin              | sysadmin                    | KDE sysadmin team and infrastructure-related repositories                                |
-| System                           |  37 | system                | system                      | Programs that interact with lower-level operating system components                      |
-| Teams                            |   2 | teams                 | teams                       |                                                                                          |
-| test                             |   1 | test                  | qt/test                     |                                                                                          |
-| Unmaintained                     | 280 | unmaintained          | unmaintained                | Projects that do not have a maintainer and are not currently active                      |
-| Usability                        |   1 | usability             | teams/usability             |                                                                                          |
-| Utilities                        |  63 | utilities             | utilities                   | Software utilities for a wide range of tasks, developed by KDE                           |
+| clang                            |   5 | clang                 | qt/clang                    |                                                                                                                         |
+| installer-framework              |   1 | installer-framework   | qt/installer-framework      |                                                                                                                         |
+| license-tools                    |   1 | license-tools         | qt/license-tools            |                                                                                                                         |
+| meta                             |   1 | meta                  | qt/meta                     |                                                                                                                         |
+| ministro                         |   1 | ministro              | qt/ministro                 |                                                                                                                         |
+| playground                       |  15 | playground            | qt/playground               |                                                                                                                         |
+| qt-creator                       |   2 | qt-creator            | qt/playground/qt-creator    |                                                                                                                         |
+| pyside                           |   7 | pyside                | qt/pyside                   |                                                                                                                         |
+| qbs                              |   1 | qbs                   | qt/qbs                      |                                                                                                                         |
+| qt                               | 104 | qt                    | qt/qt                       |                                                                                                                         |
+| qt3dstudio                       |   7 | qt3dstudio            | qt/qt3dstudio               |                                                                                                                         |
+| qt4ia                            |   1 | qt4ia                 | qt/qt4ia                    |                                                                                                                         |
+| qt-apps                          |  19 | qt-apps               | qt/qt-apps                  |                                                                                                                         |
+| qt-creator                       |  12 | qt-creator            | qt/qt-creator               |                                                                                                                         |
+| qtdesigntools                    |   1 | qtdesigntools         | qt/qtdesigntools            |                                                                                                                         |
+| qt-extensions                    |   4 | qt-extensions         | qt/qt-extensions            |                                                                                                                         |
+| qt-labs                          |  28 | qt-labs               | qt/qt-labs                  |                                                                                                                         |
+| qt-learning                      |   2 | qt-learning           | qt/qt-learning              |                                                                                                                         |
+| qt-mobility                      |   1 | qt-mobility           | qt/qt-mobility              |                                                                                                                         |
+| qtonpi                           |   1 | qtonpi                | qt/qtonpi                   |                                                                                                                         |
+| qtqa                             |   7 | qtqa                  | qt/qtqa                     |                                                                                                                         |
+| qtsdk                            |   2 | qtsdk                 | qt/qtsdk                    |                                                                                                                         |
+| qt-solutions                     |   1 | qt-solutions          | qt/qt-solutions             |                                                                                                                         |
+| test                             |   1 | test                  | qt/test                     |                                                                                                                         |
+| Rolisteam                        |   8 | rolisteam             | rolisteam                   | Virtual tabletop software that helps manage tabletop role playing games with remote friends/players                     |
+| SDK                              |  42 | sdk                   | sdk                         | Applications and scripts that ease software development                                                                 |
+| Sysadmin                         |  57 | sysadmin              | sysadmin                    | KDE sysadmin team and infrastructure-related repositories                                                               |
+| System                           |  37 | system                | system                      | Programs that interact with lower-level operating system components                                                     |
+| Teams                            |   2 | teams                 | teams                       |                                                                                                                         |
+| Accessibility                    |   1 | accessibility         | teams/accessibility         |                                                                                                                         |
+| Akademy                          |   2 | akademy               | teams/akademy               |                                                                                                                         |
+| Android                          |   1 | android               | teams/android               |                                                                                                                         |
+| Automation and Systematization   |   1 | automation            | teams/automation            | Team dedicated to the implementation of the KDE Goal with the same name. See https://community.kde.org/Goals/Automate_and_systematize_internal_processes |
+| Blauer Engel                     |   1 | blauer-engel          | teams/blauer-engel          |                                                                                                                         |
+| CI Artifacts                     |  13 | ci-artifacts          | teams/ci-artifacts          |                                                                                                                         |
+| Community Working Group          |   1 | community-wg          | teams/community-wg          |                                                                                                                         |
+| Documentation                    |   1 | documentation         | teams/documentation         |                                                                                                                         |
+| KDE Eco                          |   5 | eco                   | teams/eco                   |                                                                                                                         |
+| Flathub                          |   1 | flathub               | teams/flathub               | Team of KDE developers maintaining the KDE Apps as Flatpaks on Flathub and in KDE Invent.\r\n\r\nIssues with Flathub Flatpaks should be opened on Flathub GitHub repos. |
+| Frameworks Devs                  |   1 | frameworks-devs       | teams/frameworks-devs       |                                                                                                                         |
+| Gardening                        |   1 | gardening             | teams/gardening             |                                                                                                                         |
+| GCompris Contributors            |   1 | gcompris-contributors | teams/gcompris-contributors |                                                                                                                         |
+| InfrastructureTests              |   4 | infrastructuretests   | teams/infrastructuretests   |                                                                                                                         |
+| KDE Brazil                       |   4 | kde-brazil            | teams/kde-brazil            |                                                                                                                         |
+| KDE Developers                   |   1 | kde-developers        | teams/kde-developers        |                                                                                                                         |
+| KDE Espana Board                 |   0 | kde-espana-board      | teams/kde-espana-board      |                                                                                                                         |
+| KDE e.V.                         |   0 | kde-ev                | teams/kde-ev                |                                                                                                                         |
+| KDE e.V. Board                   |   4 | kde-ev-board          | teams/kde-ev-board          |                                                                                                                         |
+| KDE e.V. Financial Working Group |   0 | kde-ev-financial      | teams/kde-ev-financial      |                                                                                                                         |
+| KDE e.V. Fundraising             |   0 | kde-ev-fundraising    | teams/kde-ev-fundraising    |                                                                                                                         |
+| KDE Francophone                  |   1 | kde-francophone       | teams/kde-francophone       |                                                                                                                         |
+| KDE Free Qt Working Group        |   1 | kde-free-qt-wg        | teams/kde-free-qt-wg        |                                                                                                                         |
+| KDE IM Operations                |   1 | kde-im-operations     | teams/kde-im-operations     | Supporting KDE's IRC, Matrix & Telegram channels and users                                                              |
+| KDE Russia                       |   3 | kde-russia            | teams/kde-russia            |                                                                                                                         |
+| Licensing                        |   1 | licensing             | teams/licensing             |                                                                                                                         |
+| Localization                     |   0 | localization          | teams/localization          | The KDE project which touches Localization (l10n) and Internationalization (i18n)                                       |
+| PIM                              |   1 | pim                   | teams/pim                   |                                                                                                                         |
+| Plasma Ink                       |   1 | plasma-ink            | teams/plasma-ink            |                                                                                                                         |
+| Plasma Mobile                    |   1 | plasma-mobile         | teams/plasma-mobile         |                                                                                                                         |
+| Promo                            |   0 | promo                 | teams/promo                 |                                                                                                                         |
+| Quality Assurance                |   1 | qa                    | teams/qa                    |                                                                                                                         |
+| Release Service                  |   1 | release-service       | teams/release-service       |                                                                                                                         |
+| Usability                        |   1 | usability             | teams/usability             |                                                                                                                         |
+| KDE Visual Design Group          |   1 | vdg                   | teams/vdg                   | KDE's visual and UX/UI design group                                                                                     |
+| KDE Web Team                     |   1 | web                   | teams/web                   |                                                                                                                         |
+| Unmaintained                     | 280 | unmaintained          | unmaintained                | Projects that do not have a maintainer and are not currently active                                                     |
+| Utilities                        |  63 | utilities             | utilities                   | Software utilities for a wide range of tasks, developed by KDE                                                          |
+
+
+* Utilities
+
+#+name: invent-utilities-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "utilities")
+#+end_src
+
+Set to =:cache yes= after eval, turn the lights off and kindly spin your k8s down.
+
+#+name: invent-utilities-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-utilities-gql)) :cache yes
+
+#+RESULTS: invent-utilities-xml
+#+begin_export html
+<project name="utilities/abakus" path="abakus" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/ark" path="ark" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/atcore-cli" path="atcore-cli" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/atelier" path="atelier" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/basket" path="basket" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/confine" path="confine" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/daykountdown" path="daykountdown" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/fielding" path="fielding" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/filelight" path="filelight" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/francis" path="francis" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/hash-o-matic" path="hash-o-matic" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/isoimagewriter" path="isoimagewriter" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kairo" path="kairo" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kalk" path="kalk" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kate" path="kate" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kbackup" path="kbackup" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kcalc" path="kcalc" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kcharselect" path="kcharselect" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kclock" path="kclock" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kdebugsettings" path="kdebugsettings" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kdf" path="kdf" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kdialog" path="kdialog" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/keditbookmarks" path="keditbookmarks" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/keurocalc" path="keurocalc" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/keysmith" path="keysmith" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kfind" path="kfind" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kfloppy" path="kfloppy" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kgpg" path="kgpg" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kio-stash" path="kio-stash" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kirogi" path="kirogi" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/klimbgrades" path="klimbgrades" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kmarkdownwebview" path="kmarkdownwebview" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kongress" path="kongress" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/konsole" path="konsole" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kookbook" path="kookbook" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/krecorder" path="krecorder" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kregexpeditor" path="kregexpeditor" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/krename" path="krename" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kronometer" path="kronometer" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/krusader" path="krusader" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/ksecrets" path="ksecrets" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kteatime" path="kteatime" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/ktimer" path="ktimer" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/ktrip" path="ktrip" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kwalletmanager" path="kwalletmanager" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/kweather" path="kweather" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/mangonel" path="mangonel" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/markdownpart" path="markdownpart" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/mycroft-plasmoid" path="mycroft-plasmoid" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/notae" path="notae" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/okteta" path="okteta" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/powerplant" path="powerplant" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/print-manager" path="print-manager" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/qrca" path="qrca" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/rsibreak" path="rsibreak" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/skanpage" path="skanpage" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/sweeper" path="sweeper" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/symmy" path="symmy" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/telly-skout" path="telly-skout" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/toad" path="toad" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/totalreqall" path="totalreqall" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/vail" path="vail" revision="refs/heads/master" remote="invent"/>
+<project name="utilities/yakuake" path="yakuake" revision="refs/heads/master" remote="invent"/>
+#+end_export
+
+Generate =utilities.xml= manifest
+
+#+begin_src xml :tangle utilities.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-utilities-xml()>>
+</manifest>
+#+end_src
+
+* Graphics
+
+The graphics apps are likely large. I'm not sure how large, but some of these
+XML's can expand to be huge.
+
+#+name: invent-graphics-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "graphics")
+#+end_src
+
+Caching stores the results in a hash, keyed by the arguments, which should be
+deterministic. If the source block contains a =time= or a =random= or =network
+data= that changes you'll likely need to reevaluate it.
+
+#+name: invent-graphics-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-graphics-gql)) :cache yes
+
+Generate =graphics.xml= manifest
+
+#+begin_src xml :tangle graphics.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-graphics-xml()>>
+</manifest>
+#+end_src
+
+And hopefully the =git-repo= paths are good because can be tough to change
+later.
+
+* Documentation
+
+Docs are good to grep
+
+#+name: invent-documentation-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "documentation")
+#+end_src
+
+Find and replace
+
+#+name: invent-documentation-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-documentation-gql)) :cache yes
+
+Generate =documentation.xml= manifest
+
+#+begin_src xml :tangle documentation.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-documentation-xml()>>
+</manifest>
+#+end_src
+
+
+* System
+
+Now simply
+
+#+name: invent-system-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "system")
+#+end_src
+
+Find and replace
+
+#+name: invent-system-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-system-gql)) :cache yes
+
+Generate =system.xml= manifest
+
+#+begin_src xml :tangle system.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-system-xml()>>
+</manifest>
+#+end_src
+
+
+* Accessibility
+
+Now simply
+
+#+name: invent-accessibility-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "accessibility")
+#+end_src
+
+Find and replace
+
+#+name: invent-accessibility-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-accessibility-gql)) :cache yes
+
+Generate =accessibility.xml= manifest
+
+#+begin_src xml :tangle accessibility.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-accessibility-xml()>>
+</manifest>
+#+end_src
+
+
+* Games
+
+Now simply
+
+#+name: invent-games-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "games")
+#+end_src
+
+Find and replace
+
+#+name: invent-games-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-games-gql)) :cache yes
+
+Generate =games.xml= manifest
+
+#+begin_src xml :tangle games.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-games-xml()>>
+</manifest>
+#+end_src
+
+
+* Rolisteam
+
+Now simply
+
+#+name: invent-rolisteam-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "rolisteam")
+#+end_src
+
+Find and replace
+
+#+name: invent-rolisteam-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-rolisteam-gql)) :cache yes
+
+Generate =rolisteam.xml= manifest
+
+#+begin_src xml :tangle rolisteam.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-rolisteam-xml()>>
+</manifest>
+#+end_src
+
+
+* Educaton
+
+
+Now simply
+
+#+name: invent-education-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "education")
+#+end_src
+
+Find and replace
+
+#+name: invent-education-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-education-gql)) :cache yes
+
+Generate =education.xml= manifest
+
+#+begin_src xml :tangle education.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-education-xml()>>
+</manifest>
+#+end_src
+
+* Network
+
+Now simply
+
+#+name: invent-network-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "network")
+#+end_src
+
+Find and replace
+
+#+name: invent-network-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-network-gql)) :cache yes
+
+Generate =network.xml= manifest
+
+#+begin_src xml :tangle network.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-network-xml()>>
+</manifest>
+#+end_src
+
+
+
+* Multimedia
+
+Now simply
+
+#+name: invent-multimedia-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "multimedia")
+#+end_src
+
+Find and replace
+
+#+name: invent-multimedia-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-multimedia-gql)) :cache yes
+
+Generate =multimedia.xml= manifest
+
+#+begin_src xml :tangle multimedia.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-multimedia-xml()>>
+</manifest>
+#+end_src
+
+
+* SDK
+
+Apps to check later:
+
++ Umbrello :: GUI for diagramming UML
++ QML LSP :: contains qml-lsp, qml-dap, qml-refactor-fairy
++ Rust Qt Binding Generator :: generate bindings to use Rust in Qt and QML
++ Massif Visualizer :: Visualizer for Valgrind Massif data files
++ KTechLab :: IDE for microcontrollers/electronics
++ ELF Dissector :: inspect, analyze and optimize ELF
++ Heaptrack :: Heap memory profiler for Linux
++ KCacheGrind :: GUI to profilers like Valgrind
++ Codevis :: visualize/analyze code maintenance for C++ codebases
++ CuteHMI :: Open Source HMI (simulation/design?)
++ Clazy :: Qt-oriented static code analyzer
++ KDE Dev. Utilities and Scripts
+
+#+name: invent-sdk-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "sdk")
+#+end_src
+
+Find and replace
+
+#+name: invent-sdk-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-sdk-gql)) :cache yes
+
+Generate =sdk.xml= manifest
+
+#+begin_src xml :tangle sdk.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-sdk-xml()>>
+</manifest>
+#+end_src
 
 
 * Plasma
 
 #+name: invent-plasma-gql
-#+begin_example graphql
-{
-  group(fullPath: "plasma") {
-    projects(first: 100, sort: ACTIVITY_DESC) {
-      nodes {
-        id
-        name
-        topics
-        path
-        fullPath
-        visibility
-        repository {
-          rootRef
-          exists
-        }
-      }
-    }
-  }
-}
-
-#+end_example
-
-Run query
-
-#+name: invent-plasma-eld
-#+begin_src emacs-lisp :var gql=invent-plasma-gql
-(ghub-graphql gql nil
-              :username "aionfork"
-              :host "invent.kde.org"
-              :forge 'gitlab)
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "plasma")
 #+end_src
 
-fdsafdsa the output (the macros make this hard to turn into a function)
+#+name: invent-plasma-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-plasma-gql)) :cache yes
 
 #+name: invent-plasma-xml
 #+headers: :var gqldata=invent-plasma-eld :results value html
@@ -414,108 +836,31 @@ Generate =plasma.xml= manifest
 </manifest>
 #+end_src
 
+* Frameworks
 
-* Testing
+Now simply
 
-** Groups
-#  | @text \(.name) \(.projects.count) \(.path) \(.fullPath) \(.description)
-#  | map({name, projects.count, path, fullPath, description})
-
-#+name: eg-json
-#+begin_example json
-{
-  "data" : {
-    "groups" : {
-      "nodes" : [ {
-        "id" : "gid://gitlab/Group/2684",
-        "name" : "3rdparty",
-        "parent" : {
-          "id" : "gid://gitlab/Group/2647",
-          "name" : "Neon",
-          "path" : "neon",
-          "fullPath" : "neon"
-        },
-        "description" : "",
-        "path" : "3rdparty",
-        "fullPath" : "neon/3rdparty",
-        "projects" : {"count" : 18}
-      } ]
-    }
-  }
-}
-#+end_example
-
-#+headers: :stdin eg-json
-#+begin_src jq :results output
-.data.groups.nodes[]
-  | [.name, .projects.count, .path, .fullPath, .description]
-  | @tsv
+#+name: invent-frameworks-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "frameworks")
 #+end_src
 
-** Projects
+Find and replace
 
-#+name: eg-proj
-#+begin_example json
-{
-  "data" : {
-    "group" : {
-      "projects" : {
-        "nodes" : [
-          {
-            "id" : "gid://gitlab/Project/2703",
-            "name" : "Plasma Workspace",
-            "topics" : [],
-            "path" : "plasma-workspace",
-            "fullPath" : "plasma/plasma-workspace",
-            "visibility" : "public",
-            "repository" : {"rootRef" : "master", "exists" : true}
-          },
-          {
-            "id" : "gid://gitlab/Project/2163",
-            "name" : "KDE Portal for XDG Desktop",
-            "topics" : [],
-            "path" : "xdg-desktop-portal-kde",
-            "fullPath" : "plasma/xdg-desktop-portal-kde",
-            "visibility" : "public",
-            "repository" : {"rootRef" : "master", "exists" : true}
-          },
-          {
-            "id" : "gid://gitlab/Project/2559",
-            "name" : "PowerDevil",
-            "topics" : [],
-            "path" : "powerdevil",
-            "fullPath" : "plasma/powerdevil",
-            "visibility" : "public",
-            "repository" : {"rootRef" : "master", "exists" : true}
-          }
-        ]
-      }
-    }
-  }
-}
-#+end_example
+#+name: invent-frameworks-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-frameworks-gql)) :cache yes
 
-#+name: jq-proj
-#+headers: :stdin eg-proj
-#+headers: :cmd-line --raw-output
-#+begin_src jq :results output
-.data.group.projects.nodes[]
-  | [.name, .path, .fullPath, .description, .repository.rootRef]
-#  | @tsv
+Generate =frameworks.xml= manifest
+
+#+begin_src xml :tangle frameworks.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-frameworks-xml()>>
+</manifest>
 #+end_src
 
-#+RESULTS:
-: Plasma Workspace	plasma-workspace	plasma/plasma-workspace		master
-: KDE Portal for XDG Desktop	xdg-desktop-portal-kde	plasma/xdg-desktop-portal-kde		master
-: PowerDevil	powerdevil	plasma/powerdevil		master
+* Qt
 
-gadmait... it doesn't understand json?
-
-#+headers: :var json=eg-proj
-#+begin_src sh :results output
-echo $json | xq -x '.data.group.projects.nodes[] | [.name, .path, .fullPath, .description, .repository.rootRef]'
-#+end_src
-
-#+RESULTS:
-: xq: Error running jq: ExpatError: not well-formed (invalid token): line 1, column 0.
-: [ Babel evaluation exited with code 1 ]
+* Maui

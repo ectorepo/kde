@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="system/apper" path="apper" revision="refs/heads/master" remote="invent"/>
+  <project name="system/distro-release-notifier" path="distro-release-notifier" revision="refs/heads/master" remote="invent"/>
+  <project name="system/dolphin" path="dolphin" revision="refs/heads/master" remote="invent"/>
+  <project name="system/drkonqi-pk-debug-installer" path="drkonqi-pk-debug-installer" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kalternatives" path="kalternatives" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kcm-grub2" path="kcm-grub2" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kcron" path="kcron" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kde-inotify-survey" path="kde-inotify-survey" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kde-nomodeset" path="kde-nomodeset" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kdisksutilities" path="kdisksutilities" revision="refs/heads/master" remote="invent"/>
+  <project name="system/khelpcenter" path="khelpcenter" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kio-admin" path="kio-admin" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kio-fuse" path="kio-fuse" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kiss" path="kiss" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kjournald" path="kjournald" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kpmcore" path="kpmcore" revision="refs/heads/master" remote="invent"/>
+  <project name="system/ksystemlog" path="ksystemlog" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kubuntu-debug-installer" path="kubuntu-debug-installer" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kubuntu-driver-kcm" path="kubuntu-driver-kcm" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kubuntu-notification-helper" path="kubuntu-notification-helper" revision="refs/heads/master" remote="invent"/>
+  <project name="system/kup" path="kup" revision="refs/heads/master" remote="invent"/>
+  <project name="system/libdebconf-kde" path="libdebconf-kde" revision="refs/heads/master" remote="invent"/>
+  <project name="system/libqapt" path="libqapt" revision="refs/heads/master" remote="invent"/>
+  <project name="system/liquidshell" path="liquidshell" revision="refs/heads/master" remote="invent"/>
+  <project name="system/melon" path="melon" revision="refs/heads/master" remote="invent"/>
+  <project name="system/muon" path="muon" revision="refs/heads/master" remote="invent"/>
+  <project name="system/partitionmanager" path="partitionmanager" revision="refs/heads/master" remote="invent"/>
+  <project name="system/plasma-packagekit" path="plasma-packagekit" revision="refs/heads/master" remote="invent"/>
+  <project name="system/plasma-pk-updates" path="plasma-pk-updates" revision="refs/heads/master" remote="invent"/>
+  <project name="system/polkit-kde-kcmodules-1" path="polkit-kde-kcmodules-1" revision="refs/heads/master" remote="invent"/>
+  <project name="system/qtcurve" path="qtcurve" revision="refs/heads/master" remote="invent"/>
+  <project name="system/samba-mounter" path="samba-mounter" revision="refs/heads/master" remote="invent"/>
+  <project name="system/systemdgenie" path="systemdgenie" revision="refs/heads/master" remote="invent"/>
+  <project name="system/ubiquity-slideshow-neon" path="ubiquity-slideshow-neon" revision="refs/heads/master" remote="invent"/>
+  <project name="system/wacomtablet" path="wacomtablet" revision="refs/heads/master" remote="invent"/>
+  <project name="system/whoopsie-kcm" path="whoopsie-kcm" revision="refs/heads/master" remote="invent"/>
+  <project name="system/xwaylandvideobridge" path="xwaylandvideobridge" revision="refs/heads/master" remote="invent"/>
+</manifest>

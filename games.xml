@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="games/amor" path="amor" revision="refs/heads/master" remote="invent"/>
+  <project name="games/arkade" path="arkade" revision="refs/heads/master" remote="invent"/>
+  <project name="games/atlantik" path="atlantik" revision="refs/heads/master" remote="invent"/>
+  <project name="games/bomber" path="bomber" revision="refs/heads/master" remote="invent"/>
+  <project name="games/bovo" path="bovo" revision="refs/heads/master" remote="invent"/>
+  <project name="games/granatier" path="granatier" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kajongg" path="kajongg" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kapman" path="kapman" revision="refs/heads/master" remote="invent"/>
+  <project name="games/katomic" path="katomic" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kblackbox" path="kblackbox" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kblocks" path="kblocks" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kbounce" path="kbounce" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kbreakout" path="kbreakout" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kdiamond" path="kdiamond" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kfourinline" path="kfourinline" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kgoldrunner" path="kgoldrunner" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kigo" path="kigo" revision="refs/heads/master" remote="invent"/>
+  <project name="games/killbots" path="killbots" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kiriki" path="kiriki" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kjumpingcube" path="kjumpingcube" revision="refs/heads/master" remote="invent"/>
+  <project name="games/klickety" path="klickety" revision="refs/heads/master" remote="invent"/>
+  <project name="games/klines" path="klines" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kmahjongg" path="kmahjongg" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kmines" path="kmines" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kmuddy" path="kmuddy" revision="refs/heads/master" remote="invent"/>
+  <project name="games/knavalbattle" path="knavalbattle" revision="refs/heads/master" remote="invent"/>
+  <project name="games/knetwalk" path="knetwalk" revision="refs/heads/master" remote="invent"/>
+  <project name="games/knights" path="knights" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kolf" path="kolf" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kollision" path="kollision" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kolorfill" path="kolorfill" revision="refs/heads/master" remote="invent"/>
+  <project name="games/konquest" path="konquest" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kpat" path="kpat" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kreversi" path="kreversi" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kshisen" path="kshisen" revision="refs/heads/master" remote="invent"/>
+  <project name="games/ksirk" path="ksirk" revision="refs/heads/master" remote="invent"/>
+  <project name="games/ksnakeduel" path="ksnakeduel" revision="refs/heads/master" remote="invent"/>
+  <project name="games/ksokoban" path="ksokoban" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kspaceduel" path="kspaceduel" revision="refs/heads/master" remote="invent"/>
+  <project name="games/ksquares" path="ksquares" revision="refs/heads/master" remote="invent"/>
+  <project name="games/ksudoku" path="ksudoku" revision="refs/heads/master" remote="invent"/>
+  <project name="games/ktuberling" path="ktuberling" revision="refs/heads/master" remote="invent"/>
+  <project name="games/kubrick" path="kubrick" revision="refs/heads/master" remote="invent"/>
+  <project name="games/libkdegames" path="libkdegames" revision="refs/heads/master" remote="invent"/>
+  <project name="games/libkmahjongg" path="libkmahjongg" revision="refs/heads/master" remote="invent"/>
+  <project name="games/lskat" path="lskat" revision="refs/heads/master" remote="invent"/>
+  <project name="games/palapeli" path="palapeli" revision="refs/heads/master" remote="invent"/>
+  <project name="games/picmi" path="picmi" revision="refs/heads/master" remote="invent"/>
+</manifest>

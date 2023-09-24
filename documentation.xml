@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="documentation/develop-kde-org" path="develop-kde-org" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/digikam-doc" path="digikam-doc" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/docs-kdenlive-org" path="docs-kdenlive-org" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/docs-krita-org" path="docs-krita-org" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/docs-plasma-mobile-org" path="docs-plasma-mobile-org" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/hig-kde-org" path="hig-kde-org" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/kf5book" path="kf5book" revision="refs/heads/master" remote="invent"/>
+  <project name="documentation/openraster-org" path="openraster-org" revision="refs/heads/master" remote="invent"/>
+</manifest>

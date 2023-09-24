@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="multimedia/amarok" path="amarok" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/audex" path="audex" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/audiocd-kio" path="audiocd-kio" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/audiotube" path="audiotube" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/dragon" path="dragon" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/elisa" path="elisa" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/ffmpegthumbs" path="ffmpegthumbs" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/haruna" path="haruna" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/juk" path="juk" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/k3b" path="k3b" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kaffeine" path="kaffeine" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kamoso" path="kamoso" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kasts" path="kasts" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kdenlive" path="kdenlive" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kdenlive-opentimelineio" path="kdenlive-opentimelineio" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kdenlive-test-suite" path="kdenlive-test-suite" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kid3" path="kid3" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kmix" path="kmix" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kmplayer" path="kmplayer" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kscd" path="kscd" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/kwave" path="kwave" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/libkcddb" path="libkcddb" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/libkcompactdisc" path="libkcompactdisc" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/plasmatube" path="plasmatube" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/rattlesnake" path="rattlesnake" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/stopmotion" path="stopmotion" revision="refs/heads/master" remote="invent"/>
+  <project name="multimedia/subtitlecomposer" path="subtitlecomposer" revision="refs/heads/master" remote="invent"/>
+</manifest>

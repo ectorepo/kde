@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="education/analitza" path="analitza" revision="refs/heads/master" remote="invent"/>
+  <project name="education/artikulate" path="artikulate" revision="refs/heads/master" remote="invent"/>
+  <project name="education/artikulate-data" path="artikulate-data" revision="refs/heads/master" remote="invent"/>
+  <project name="education/blinken" path="blinken" revision="refs/heads/master" remote="invent"/>
+  <project name="education/cantor" path="cantor" revision="refs/heads/master" remote="invent"/>
+  <project name="education/gcompris" path="gcompris" revision="refs/heads/master" remote="invent"/>
+  <project name="education/gcompris-data" path="gcompris-data" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kalgebra" path="kalgebra" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kalzium" path="kalzium" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kanagram" path="kanagram" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kard" path="kard" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kartesio" path="kartesio" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kbruch" path="kbruch" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kdeedu-data" path="kdeedu-data" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kgeography" path="kgeography" revision="refs/heads/master" remote="invent"/>
+  <project name="education/khangman" path="khangman" revision="refs/heads/master" remote="invent"/>
+  <project name="education/khipu" path="khipu" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kig" path="kig" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kiten" path="kiten" revision="refs/heads/master" remote="invent"/>
+  <project name="education/klettres" path="klettres" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kmplot" path="kmplot" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kstars" path="kstars" revision="refs/heads/master" remote="invent"/>
+  <project name="education/ktouch" path="ktouch" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kturtle" path="kturtle" revision="refs/heads/master" remote="invent"/>
+  <project name="education/kwordquiz" path="kwordquiz" revision="refs/heads/master" remote="invent"/>
+  <project name="education/labplot" path="labplot" revision="refs/heads/master" remote="invent"/>
+  <project name="education/libkeduvocdocument" path="libkeduvocdocument" revision="refs/heads/master" remote="invent"/>
+  <project name="education/marble" path="marble" revision="refs/heads/master" remote="invent"/>
+  <project name="education/mark" path="mark" revision="refs/heads/master" remote="invent"/>
+  <project name="education/minuet" path="minuet" revision="refs/heads/master" remote="invent"/>
+  <project name="education/parley" path="parley" revision="refs/heads/master" remote="invent"/>
+  <project name="education/rkward" path="rkward" revision="refs/heads/master" remote="invent"/>
+  <project name="education/rocs" path="rocs" revision="refs/heads/master" remote="invent"/>
+  <project name="education/step" path="step" revision="refs/heads/master" remote="invent"/>
+</manifest>

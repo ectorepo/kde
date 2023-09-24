@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="rolisteam/rcharactersheet" path="rcharactersheet" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rcse" path="rcse" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rolisteam" path="rolisteam" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rolisteam-common" path="rolisteam-common" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rolisteam-community-data" path="rolisteam-community-data" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rolisteam-diceparser" path="rolisteam-diceparser" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rolisteam-packaging" path="rolisteam-packaging" revision="refs/heads/master" remote="invent"/>
+  <project name="rolisteam/rolisteam-plugins" path="rolisteam-plugins" revision="refs/heads/master" remote="invent"/>
+</manifest>

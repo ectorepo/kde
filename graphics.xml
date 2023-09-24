@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="graphics/arianna" path="arianna" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/colord-kde" path="colord-kde" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/digikam" path="digikam" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/digikam-test-data" path="digikam-test-data" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/gwenview" path="gwenview" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kamera" path="kamera" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kcolorchooser" path="kcolorchooser" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kdegraphics-mobipocket" path="kdegraphics-mobipocket" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kdegraphics-thumbnailers" path="kdegraphics-thumbnailers" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kdiagram" path="kdiagram" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kgeotag" path="kgeotag" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kgraphviewer" path="kgraphviewer" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kimagemapeditor" path="kimagemapeditor" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kipi-plugins" path="kipi-plugins" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/klook" path="klook" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kodaskanna" path="kodaskanna" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/koko" path="koko" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kolor-manager" path="kolor-manager" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kolourpaint" path="kolourpaint" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kooka" path="kooka" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kphotoalbum" path="kphotoalbum" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/krita" path="krita" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kruler" path="kruler" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kseexpr" path="kseexpr" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kst-plot" path="kst-plot" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kuickshow" path="kuickshow" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/kxstitch" path="kxstitch" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/libkdcraw" path="libkdcraw" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/libkexiv2" path="libkexiv2" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/libkgeomap" path="libkgeomap" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/libkipi" path="libkipi" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/libksane" path="libksane" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/okular" path="okular" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/peruse" path="peruse" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/pikasso" path="pikasso" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/pvfviewer" path="pvfviewer" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/skanlite" path="skanlite" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/spectacle" path="spectacle" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/svgpart" path="svgpart" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/symboleditor" path="symboleditor" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/tikzkit" path="tikzkit" revision="refs/heads/master" remote="invent"/>
+  <project name="graphics/washipad" path="washipad" revision="refs/heads/master" remote="invent"/>
+</manifest>
