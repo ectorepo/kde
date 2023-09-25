@@ -23,14 +23,22 @@ For the =plasma= group of projects, you would:
 + create a containing directory at =$_ECTO/kde=
 + create a subdirectory at =$_ECTO/kde/plasma= and =cd= to it
 + run =repo init -u https://github.com/ectorepo/kde -m plasma.xml=
-+ run =repo sync= to bring all repositories up to date
++ run =repo sync= to bring all repositories up to date.
 + cross your fingers and hope no one renamed a branch to =main=
 
 if so, regenerate the XML by tangling the file or fix it manually. Since repo is
 async, it doesn't really tell you what project it's failing on in a "linear"
 fashion.
 
-That should give you up to date copies of the following =plasma= repositories:
+To avoid the warnings use =repo sync --no-clone-bundle= to avoid the warnings.
+The [[https://www.kernel.org/cloning-linux-from-a-bundle.html][clone bundle]] usually resolves reliability issues, but I think also minimizes
+bandwidth.
+
+Once you clone, you can check out a repo branch and set various subprojects to
+it, in case the top development trunk is another branch.
+
+The sync for plasma should give you up to date copies of the following
+repositories below.
 
 | aura-browser      | kdeplasma-addons | ksystemstats         | oxygen                       | plasma-mobile           | plasma-workspace            |
 | bluedevil         | kde-vdg-extras   | kwallet-pam          | oxygen-gtk                   | plasma-nano             | plasma-workspace-wallpapers |
@@ -47,16 +55,16 @@ That should give you up to date copies of the following =plasma= repositories:
 | kde-gtk-config    | ksysguard        | ocean-sound-theme    | plasma-integration           | plasma-welcome          |                             |
 
 ***** TODO Test cloning repos
-+ [ ] Utilities
++ [X] Utilities
 + [ ] Graphics
-+ [ ] Documentation
-+ [ ] Acessibility
-+ [ ] System
-+ [ ] Libraries
++ [X] Documentation
++ [X] Acessibility
++ [X] System
++ [X] Libraries
 + [ ] Games
-+ [ ] Network
-+ [ ] Sdk
-+ [ ] Rolisteam
++ [X] Network
++ [X] Sdk
++ [X] Rolisteam
 + [ ] Maui
 + [X] plasma
 + [ ] Frameworks
@@ -670,6 +678,31 @@ Generate =multimedia.xml= manifest
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
   <<invent-multimedia-xml()>>
+</manifest>
+#+end_src
+
+* Libraries
+
+Now simply
+
+#+name: invent-libraries-gql
+#+begin_src emacs-lisp :var gqlt=projects-query :results silent
+(format gqlt "libraries")
+#+end_src
+
+Find and replace
+
+#+name: invent-libraries-xml
+#+call: graphql-eld-to-xml(gqldata=runquery(gql=invent-libraries-gql)) :cache yes
+
+Generate =libraries.xml= manifest
+
+#+begin_src xml :tangle libraries.xml :noweb yes
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <<invent-libraries-xml()>>
 </manifest>
 #+end_src
 

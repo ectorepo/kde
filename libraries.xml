@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest>
+  <include name="_remotes.xml"/>
+  <default remote="invent" sync-j="8" revision="refs/heads/master"/>
+  <project name="libraries/asynqt" path="asynqt" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/atcore" path="atcore" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/baloo-widgets" path="baloo-widgets" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/binschema" path="binschema" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/croutons" path="croutons" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/cxx11-cmake-modules" path="cxx11-cmake-modules" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/futuresql" path="futuresql" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kasync" path="kasync" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kcgroups" path="kcgroups" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kdb" path="kdb" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kdocumentstore" path="kdocumentstore" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kdsoap-ws-discovery-client" path="kdsoap-ws-discovery-client" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kije" path="kije" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kirigami-addons" path="kirigami-addons" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kmoretools" path="kmoretools" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kopeninghours" path="kopeninghours" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kosmindoormap" path="kosmindoormap" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kproperty" path="kproperty" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kpublictransport" path="kpublictransport" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kqtquickcharts" path="kqtquickcharts" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kquickchatcomponents" path="kquickchatcomponents" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kquickimageeditor" path="kquickimageeditor" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kquickitemviews" path="kquickitemviews" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kreport" path="kreport" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kross-interpreters" path="kross-interpreters" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/ksanecore" path="ksanecore" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/ktextaddons" path="ktextaddons" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kunifiedpush" path="kunifiedpush" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kuserfeedback" path="kuserfeedback" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kweathercore" path="kweathercore" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kwebkitpart" path="kwebkitpart" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/kwindowsaddons" path="kwindowsaddons" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libkimageannotator" path="libkimageannotator" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libkubuntu" path="libkubuntu" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libkvkontakte" path="libkvkontakte" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libmediawiki" path="libmediawiki" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libqaccessibilityclient" path="libqaccessibilityclient" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libqgit2" path="libqgit2" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libqmycroft" path="libqmycroft" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libqsystemd" path="libqsystemd" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/libtmdbqt" path="libtmdbqt" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/mpvqt" path="mpvqt" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/nongurigaeru" path="nongurigaeru" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/perceptualcolor" path="perceptualcolor" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/phonon" path="phonon" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/phonon-gstreamer" path="phonon-gstreamer" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/phonon-vlc" path="phonon-vlc" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/plasma-wayland-protocols" path="plasma-wayland-protocols" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/pokipoki" path="pokipoki" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/polkit-qt-1" path="polkit-qt-1" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/pulseaudio-qt" path="pulseaudio-qt" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/pykde5" path="pykde5" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/qca" path="qca" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/qtjolie" path="qtjolie" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/snorenotify" path="snorenotify" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/snoretoast" path="snoretoast" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/twine2" path="twine2" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/upnp-lib-qt" path="upnp-lib-qt" revision="refs/heads/master" remote="invent"/>
+  <project name="libraries/xdg-portal-test-kde" path="xdg-portal-test-kde" revision="refs/heads/master" remote="invent"/>
+</manifest>
