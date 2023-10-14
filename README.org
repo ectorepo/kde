@@ -56,18 +56,17 @@ repositories below.
 
 ***** TODO Test cloning repos
 + [X] Utilities
-+ [ ] Graphics
++ [X] Graphics
 + [X] Documentation
 + [X] Acessibility
 + [X] System
 + [X] Libraries
-+ [ ] Games
++ [X] Games
 + [X] Network
 + [X] Sdk
 + [X] Rolisteam
-+ [ ] Maui
 + [X] plasma
-+ [ ] Frameworks
++ [X] Frameworks
 
 ***** TODO Qt, Framework and Other Repos
 
@@ -653,8 +652,6 @@ Generate =network.xml= manifest
   <<invent-network-xml()>>
 </manifest>
 #+end_src
-
-
 
 * Multimedia
 
