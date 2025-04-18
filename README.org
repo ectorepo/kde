@@ -460,7 +460,6 @@ Set to =:cache yes= after eval, turn the lights off and kindly spin your k8s dow
 Generate =utilities.xml= manifest
 
 #+begin_src xml :tangle utilities.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -488,7 +487,6 @@ data= that changes you'll likely need to reevaluate it.
 Generate =graphics.xml= manifest
 
 #+begin_src xml :tangle graphics.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -516,7 +514,6 @@ Find and replace
 Generate =documentation.xml= manifest
 
 #+begin_src xml :tangle documentation.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -542,7 +539,6 @@ Find and replace
 Generate =system.xml= manifest
 
 #+begin_src xml :tangle system.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -568,7 +564,6 @@ Find and replace
 Generate =accessibility.xml= manifest
 
 #+begin_src xml :tangle accessibility.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -594,7 +589,6 @@ Find and replace
 Generate =games.xml= manifest
 
 #+begin_src xml :tangle games.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -620,7 +614,6 @@ Find and replace
 Generate =rolisteam.xml= manifest
 
 #+begin_src xml :tangle rolisteam.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -647,7 +640,6 @@ Find and replace
 Generate =education.xml= manifest
 
 #+begin_src xml :tangle education.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -672,7 +664,6 @@ Find and replace
 Generate =network.xml= manifest
 
 #+begin_src xml :tangle network.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -697,7 +688,6 @@ Find and replace
 Generate =multimedia.xml= manifest
 
 #+begin_src xml :tangle multimedia.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -722,7 +712,6 @@ Find and replace
 Generate =libraries.xml= manifest
 
 #+begin_src xml :tangle libraries.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -761,7 +750,6 @@ Find and replace
 Generate =sdk.xml= manifest
 
 #+begin_src xml :tangle sdk.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -885,7 +873,6 @@ Generate =sdk.xml= manifest
 Generate =plasma.xml= manifest
 
 #+begin_src xml :tangle plasma.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
@@ -910,7 +897,6 @@ Find and replace
 Generate =frameworks.xml= manifest
 
 #+begin_src xml :tangle frameworks.xml :noweb yes
-<?xml version="1.0" encoding="utf-8"?>
 <manifest>
   <include name="_remotes.xml"/>
   <default remote="invent" sync-j="8" revision="refs/heads/master"/>
