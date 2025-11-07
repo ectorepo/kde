@@ -1,7 +1,7 @@
 #+title:     Ectorepo: KDE
 #+author:    David Conner
 #+email:     noreply@te.xel.io
-#+PROPERTY: header-args :comments none
+#+PROPERTY: header-args+ :comments none
 
 A collection of KDE resources and repos exposed as a Repo manifest for all your
 grep-finding pleasure.
